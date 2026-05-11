@@ -6,4 +6,10 @@
     <Project Path="src/CareWorkOps.Infrastructure/CareWorkOps.Infrastructure.csproj" />
     <Project Path="src/CareWorkOps.Persistence/CareWorkOps.Persistence.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CareWorkOps.Application.Tests/CareWorkOps.Application.Tests.csproj" Id="d89e4f22-c211-4bd6-b538-3a6510df1294" />
+    <Project Path="tests/CareWorkOps.Architecture.Tests/CareWorkOps.Architecture.Tests.csproj" Id="439c7bc4-2dae-4882-806c-be16f201a216" />
+    <Project Path="tests/CareWorkOps.Domain.Tests/CareWorkOps.Domain.Tests.csproj" Id="c5d34cee-afeb-44be-bc80-2bc3c76abf7a" />
+    <Project Path="tests/CareWorkOps.Integration.Tests/CareWorkOps.Integration.Tests.csproj" Id="ac46728e-6762-4929-b388-6f6e81dc8398" />
+  </Folder>
 </Solution>
