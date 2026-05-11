@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-using FluentValidation; 
+using FluentValidation;
+using CareWorkOps.Application.Common.Behaviours;
 
 namespace CareWorkOps.Application
 {
@@ -17,6 +18,8 @@ namespace CareWorkOps.Application
 
             
             services.AddValidatorsFromAssembly(assembly);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             return services;
         }
