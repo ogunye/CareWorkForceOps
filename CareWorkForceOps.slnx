@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CareWorkOps.Api/CareWorkOps.Api.csproj" Id="5c4400ca-e70d-46cf-8c08-65d5f877b308" />
+    <Project Path="src/CareWorkOps.Application/CareWorkOps.Application.csproj" />
+    <Project Path="src/CareWorkOps.Domain/CareWorkOps.Domain.csproj" />
+    <Project Path="src/CareWorkOps.Infrastructure/CareWorkOps.Infrastructure.csproj" />
+    <Project Path="src/CareWorkOps.Persistence/CareWorkOps.Persistence.csproj" />
+  </Folder>
+</Solution>
