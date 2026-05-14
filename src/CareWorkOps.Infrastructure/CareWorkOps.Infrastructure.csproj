@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CareWorkOps.Application\CareWorkOps.Application.csproj" />
+    <ProjectReference Include="..\CareWorkOps.Persistence\CareWorkOps.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
