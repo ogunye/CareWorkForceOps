@@ -3,13 +3,24 @@ using CareWorkOps.Api.Extensions;
 using CareWorkOps.Application;
 using CareWorkOps.Infrastructure;
 using CareWorkOps.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .Enrich.FromLogContext();
+});
+
 
 // Add services to the container.
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddCareWorkOpsAuthentication(builder.Configuration);
 builder.Services.AddCareWorkOpsObservability(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -28,7 +39,7 @@ builder.Services.AddApiVersioning(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 
-
+builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -49,6 +60,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

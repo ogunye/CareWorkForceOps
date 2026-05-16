@@ -1,5 +1,6 @@
 ﻿using CareWorkOps.Application.Abstractions.Identity;
 using CareWorkOps.Infrastructure.Identity;
+using CareWorkOps.Infrastructure.Infrastructure.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ namespace CareWorkOps.Infrastructure
             IConfiguration configuration)
         {
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
