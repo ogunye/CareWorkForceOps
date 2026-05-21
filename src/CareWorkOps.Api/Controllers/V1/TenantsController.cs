@@ -59,9 +59,14 @@ namespace CareWorkOps.Api.Controllers.V1
                     response);
             }
 
+            // Use a standard validation message when the error code indicates validation
+            var responseMessage = result.Error.Code == "Validation.Error"
+                ? "Validation failed."
+                : result.Error.Message;
+
             var errorResponse = ApiResponse<CreateTenantResponse>.Fail(
-                result.Error.Message,
-                [result.Error.Message],
+                responseMessage,
+                new[] { result.Error.Message },
                 correlationId);
 
             return result.Error.Code switch

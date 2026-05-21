@@ -68,3 +68,5 @@ app.MapControllers();
 app.MapCareWorkOpsHealthChecks();
 
 app.Run();
+
+public partial class Program { }
