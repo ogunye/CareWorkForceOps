@@ -1,0 +1,17 @@
+services:
+  careworkops.api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_HTTP_PORTS: 8080
+      ConnectionStrings__SqlConnection: "Server=careworkops-sql,1433;Database=CareWorkOps-DBv1;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;"
+      Jwt__Issuer: "CareWorkOps"
+      Jwt__Audience: "CareWorkOps.Client"
+      Jwt__SecretKey: "${JWT_SECRET_KEY}"
+      Jwt__ExpiryMinutes: "60"
+      Redis__ConnectionString: "careworkops-redis:6379"
+    ports:
+      - "${API_PORT}:8080"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

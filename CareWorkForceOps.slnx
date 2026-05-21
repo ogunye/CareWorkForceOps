@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".env" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/CareWorkOps.Api/CareWorkOps.Api.csproj" Id="5c4400ca-e70d-46cf-8c08-65d5f877b308" />
     <Project Path="src/CareWorkOps.Application/CareWorkOps.Application.csproj" />
@@ -12,4 +15,7 @@
     <Project Path="tests/CareWorkOps.Domain.Tests/CareWorkOps.Domain.Tests.csproj" Id="c5d34cee-afeb-44be-bc80-2bc3c76abf7a" />
     <Project Path="tests/CareWorkOps.Integration.Tests/CareWorkOps.Integration.Tests.csproj" Id="ac46728e-6762-4929-b388-6f6e81dc8398" />
   </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>
