@@ -1,12 +1,10 @@
-﻿using FluentValidation;
+﻿using CareWorkOps.Application.Common;
+using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CareWorkOps.Application.Common.Behaviours
-{
-    public sealed class ValidationBehaviour<TRequest, TResponse>
+namespace CareWorkOps.Application.Common.Behaviours;
+
+public sealed class ValidationBehaviour<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
 {
@@ -46,6 +44,12 @@ namespace CareWorkOps.Application.Common.Behaviours
         }
 
         var errorMessage = string.Join("; ", validationErrors);
+        var error = Error.Validation(errorMessage);
+
+        if (typeof(TResponse) == typeof(Result))
+        {
+            return (TResponse)(object)Result.Failure(error);
+        }
 
         if (typeof(TResponse).IsGenericType &&
             typeof(TResponse).GetGenericTypeDefinition() == typeof(Result<>))
@@ -54,14 +58,15 @@ namespace CareWorkOps.Application.Common.Behaviours
 
             var failureMethod = typeof(Result<>)
                 .MakeGenericType(responseType)
-                .GetMethod(nameof(Result<object>.Failure), [typeof(Error)]);
+                .GetMethod(
+                    nameof(Result<object>.Failure),
+                    [typeof(Error)]);
 
             return (TResponse)failureMethod!.Invoke(
                 null,
-                [Error.Validation(errorMessage)])!;
+                [error])!;
         }
 
         throw new ValidationException(errorMessage);
     }
-}
 }

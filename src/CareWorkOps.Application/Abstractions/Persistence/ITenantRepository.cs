@@ -19,5 +19,7 @@ namespace CareWorkOps.Application.Abstractions.Persistence
         Task<Tenant?> GetBySlugAsync(
             string slug,
             CancellationToken cancellationToken = default);
+
+        Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default);
     }
 }

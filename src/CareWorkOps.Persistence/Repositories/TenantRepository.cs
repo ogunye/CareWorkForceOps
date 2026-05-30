@@ -47,5 +47,11 @@ namespace CareWorkOps.Persistence.Repositories
             return await _context.Tenants
                 .FirstOrDefaultAsync(x => x.Slug == slug, cancellationToken);
         }
+
+        public Task UpdateAsync(Tenant tenant, CancellationToken cancellationToken = default)
+        {
+            _context.Tenants.Update(tenant);
+            return Task.CompletedTask; 
+        }
     }
 }

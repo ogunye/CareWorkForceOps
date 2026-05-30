@@ -10,5 +10,6 @@ namespace CareWorkOps.Application.Tenants.Dtos
     string Name,
     string Slug,
     TenantIsolationMode IsolationMode,
-    TenantStatus Status);
+    TenantStatus Status,
+    string? ConnectionString);
 }

@@ -11,7 +11,10 @@ builder.Host.UseSerilog((context, configuration) =>
 {
     configuration
         .ReadFrom.Configuration(context.Configuration)
-        .Enrich.FromLogContext();
+        .Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .Enrich.WithProcessId()
+        .Enrich.WithThreadId();
 });
 
 builder.Services.AddApplication();
@@ -23,39 +26,33 @@ builder.Services.AddCareWorkOpsObservability(builder.Configuration);
 
 builder.Services.AddControllers();
 
-builder.Services
-    .AddApiVersioning(options =>
-    {
-        options.DefaultApiVersion = new ApiVersion(1, 0);
-        options.AssumeDefaultVersionWhenUnspecified = true;
-        options.ReportApiVersions = true;
-    })
-    .AddApiExplorer(options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+})
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
-    options.CustomSchemaIds(type => type.FullName);
-});
+builder.Services.AddCareWorkOpsSwagger();
 
 var app = builder.Build();
 
 app.UseCorrelationId();
 app.UseGlobalExceptionHandling();
+app.UseStructuredRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "CareWorkOps API v1");
-        options.RoutePrefix = "swagger";
     });
 }
 
@@ -69,4 +66,4 @@ app.MapCareWorkOpsHealthChecks();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program;

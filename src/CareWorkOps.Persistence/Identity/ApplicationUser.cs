@@ -1,42 +1,57 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CareWorkOps.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace CareWorkOps.Persistence.Identity
+namespace CareWorkOps.Persistence.Identity;
+
+public sealed class ApplicationUser : IdentityUser<Guid>
 {
-    public sealed class ApplicationUser : IdentityUser<Guid>
+    public Guid TenantId { get; private set; }
+
+    public string FirstName { get; private set; } = string.Empty;
+
+    public string LastName { get; private set; } = string.Empty;
+
+    public UserStatus Status { get; private set; } = UserStatus.Active;
+
+    public bool IsActive => Status == UserStatus.Active;
+
+    private ApplicationUser()
     {
-        public Guid TenantId { get; private set; }
+    }
 
-        public string FirstName { get; private set; } = string.Empty;
+    public ApplicationUser(
+        Guid tenantId,
+        string firstName,
+        string lastName,
+        string email)
+    {
+        Id = Guid.NewGuid();
+        TenantId = tenantId;
+        FirstName = firstName.Trim();
+        LastName = lastName.Trim();
+        Email = email.Trim().ToLowerInvariant();
+        UserName = Email;
+        NormalizedEmail = Email.ToUpperInvariant();
+        NormalizedUserName = Email.ToUpperInvariant();
+        EmailConfirmed = true;
+        Status = UserStatus.Active;
+    }
 
-        public string LastName { get; private set; } = string.Empty;
+    public string FullName => $"{FirstName} {LastName}";
 
-        public bool IsActive { get; private set; } = true;
+    public void UpdateProfile(string firstName, string lastName)
+    {
+        FirstName = firstName.Trim();
+        LastName = lastName.Trim();
+    }
 
-        private ApplicationUser()
-        {
-        }
+    public void Deactivate()
+    {
+        Status = UserStatus.Inactive;
+    }
 
-        public ApplicationUser(
-            Guid tenantId,
-            string firstName,
-            string lastName,
-            string email)
-        {
-            Id = Guid.NewGuid();
-            TenantId = tenantId;
-            FirstName = firstName.Trim();
-            LastName = lastName.Trim();
-            Email = email.Trim().ToLowerInvariant();
-            UserName = Email;
-            NormalizedEmail = Email.ToUpperInvariant();
-            NormalizedUserName = Email.ToUpperInvariant();
-            EmailConfirmed = true;
-            IsActive = true;
-        }
-
-        public string FullName => $"{FirstName} {LastName}";
+    public void Reactivate()
+    {
+        Status = UserStatus.Active;
     }
 }

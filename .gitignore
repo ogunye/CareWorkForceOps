@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /src/CareWorkOps.Api/appsettings.json
 /.env
 /docker-compose.yml
+/src/CareWorkOps.Api/appsettings.Development.json

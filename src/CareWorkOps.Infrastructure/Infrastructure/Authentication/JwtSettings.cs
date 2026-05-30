@@ -15,5 +15,6 @@ namespace CareWorkOps.Infrastructure.Infrastructure.Authentication
         public string SecretKey { get; init; } = string.Empty;
 
         public int ExpiryMinutes { get; init; } = 60;
+        public int RefreshTokenExpiryDays { get; init; } = 7;
     }
 }

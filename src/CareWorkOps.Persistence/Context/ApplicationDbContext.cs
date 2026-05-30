@@ -1,5 +1,6 @@
 ﻿using CareWorkOps.Application.Abstractions.Persistence;
 using CareWorkOps.Domain.Tenants;
+using CareWorkOps.Persistence.Auditing;
 using CareWorkOps.Persistence.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace CareWorkOps.Persistence.Context
         }
 
         public DbSet<Tenant> Tenants => Set<Tenant>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+         public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

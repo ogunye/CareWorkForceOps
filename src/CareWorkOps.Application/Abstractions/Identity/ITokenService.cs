@@ -14,5 +14,6 @@ namespace CareWorkOps.Application.Abstractions.Identity
     Guid TenantId,
     string Email,
     string FullName,
-    IReadOnlyCollection<string> Roles);
+    IReadOnlyCollection<string> Roles,
+    IReadOnlyCollection<string> Permissions);
 }
