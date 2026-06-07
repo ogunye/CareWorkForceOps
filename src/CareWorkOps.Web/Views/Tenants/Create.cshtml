@@ -1,0 +1,79 @@
+﻿@model CareWorkOps.Web.ViewModels.Tenants.CreateTenantViewModel
+
+@{
+    ViewData["Title"] = "Create Tenant";
+}
+
+<h1 class="h3 mb-3">Create Tenant</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TenantName" class="form-label"></label>
+                    <input asp-for="TenantName" class="form-control" />
+                    <span asp-validation-for="TenantName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="TenantSlug" class="form-label"></label>
+                    <input asp-for="TenantSlug" class="form-control" />
+                    <span asp-validation-for="TenantSlug" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AdminFirstName" class="form-label"></label>
+                    <input asp-for="AdminFirstName" class="form-control" />
+                    <span asp-validation-for="AdminFirstName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AdminLastName" class="form-label"></label>
+                    <input asp-for="AdminLastName" class="form-control" />
+                    <span asp-validation-for="AdminLastName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AdminEmail" class="form-label"></label>
+                    <input asp-for="AdminEmail" class="form-control" />
+                    <span asp-validation-for="AdminEmail" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AdminPassword" class="form-label"></label>
+                    <input asp-for="AdminPassword" class="form-control" />
+                    <span asp-validation-for="AdminPassword" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="IsolationMode" class="form-label"></label>
+                    <select asp-for="IsolationMode" class="form-select">
+                        <option value="SharedDatabase">Shared Database</option>
+                        <option value="DatabasePerTenant">Database Per Tenant</option>
+                    </select>
+                    <span asp-validation-for="IsolationMode" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ConnectionString" class="form-label"></label>
+                    <input asp-for="ConnectionString" class="form-control" />
+                    <span asp-validation-for="ConnectionString" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Create Tenant</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,10 +1,11 @@
-﻿using CareWorkOps.Application.Identity.Dtos;
+﻿using CareWorkOps.Application.Common;
+using CareWorkOps.Application.Identity.Dtos;
 
 namespace CareWorkOps.Application.Abstractions.Identity;
 
 public interface IUserManagementService
 {
-    Task<UserDto?> CreateUserAsync(
+    Task<Result<UserDto>> CreateUserAsync(
         Guid tenantId,
         string firstName,
         string lastName,

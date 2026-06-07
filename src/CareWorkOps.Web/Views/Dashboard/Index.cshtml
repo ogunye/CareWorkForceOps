@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AppLayout";
+}
+
+<div class="dashboard-header">
+    <div>
+        <h1>Good morning, John 👋</h1>
+        <p>Here’s what’s happening at <strong>Bright Care Services</strong></p>
+    </div>
+
+    <div class="dashboard-actions">
+        <button class="btn btn-light border">Today, 14 May 2025</button>
+        <button class="btn btn-light border">Filters</button>
+    </div>
+</div>
+
+<div class="metric-grid">
+    <div class="metric-card">
+        <div class="metric-title">Compliance Readiness</div>
+        <div class="metric-value">92%</div>
+        <div class="metric-change positive">+4% from last month</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-title">Active Service Users</div>
+        <div class="metric-value">248</div>
+        <div class="metric-change positive">+12 from last month</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-title">Scheduled Visits Today</div>
+        <div class="metric-value">1,486</div>
+        <div class="metric-change">On track</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-title">Missed Visits</div>
+        <div class="metric-value">3</div>
+        <div class="metric-change negative">-2 from yesterday</div>
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-title">Open Incidents</div>
+        <div class="metric-value">7</div>
+        <div class="metric-change negative">-1 from yesterday</div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="panel-card">
+        <div class="panel-title">Visits Today</div>
+        <div class="placeholder-chart">Donut chart placeholder</div>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-title">Visits Trend Last 7 Days</div>
+        <div class="placeholder-chart">Line chart placeholder</div>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-title">Compliance Overview</div>
+
+        <div class="progress-row">
+            <label><span>Training Compliance</span><span>94%</span></label>
+            <div class="progress"><div class="progress-bar bg-success" style="width:94%"></div></div>
+        </div>
+
+        <div class="progress-row">
+            <label><span>Mandatory Docs</span><span>90%</span></label>
+            <div class="progress"><div class="progress-bar bg-success" style="width:90%"></div></div>
+        </div>
+
+        <div class="progress-row">
+            <label><span>Policies Read</span><span>96%</span></label>
+            <div class="progress"><div class="progress-bar bg-success" style="width:96%"></div></div>
+        </div>
+
+        <div class="progress-row">
+            <label><span>DBS Checks</span><span>92%</span></label>
+            <div class="progress"><div class="progress-bar bg-success" style="width:92%"></div></div>
+        </div>
+
+        <a href="#" class="d-block text-center mt-4 fw-bold">View full compliance</a>
+    </div>
+</div>
+
+<div class="bottom-grid">
+    <div class="panel-card">
+        <div class="panel-title">Alerts & Notifications</div>
+
+        <div class="alert-row">
+            <span>3 visits are running late</span>
+            <small>10 min ago</small>
+        </div>
+
+        <div class="alert-row">
+            <span>2 staff with expiring DBS within 30 days</span>
+            <small>45 min ago</small>
+        </div>
+
+        <div class="alert-row">
+            <span>4 service users have overdue care plan reviews</span>
+            <small>1 hr ago</small>
+        </div>
+
+        <a href="#" class="d-block text-center mt-3 fw-bold">View all alerts</a>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-title">My Tasks</div>
+
+        <div class="task-row">
+            <span>Review care plan - Mary Johnson</span>
+            <small class="negative">Due today</small>
+        </div>
+
+        <div class="task-row">
+            <span>Approve timesheets</span>
+            <small class="negative">Due today</small>
+        </div>
+
+        <div class="task-row">
+            <span>Incident follow up - #INC-1042</span>
+            <small>Due tomorrow</small>
+        </div>
+
+        <a href="#" class="d-block text-center mt-3 fw-bold">View all tasks</a>
+    </div>
+</div>

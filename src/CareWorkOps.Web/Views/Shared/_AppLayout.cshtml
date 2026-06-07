@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - CareWorkOps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">◆</div>
+                <span>CareWorkOps</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a class="active" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                <a href="#">My Tasks <span class="nav-badge">4</span></a>
+                <a href="#">Service Users</a>
+                <a href="#">Care Plans</a>
+                <a href="#">Rota & Visits</a>
+                <a href="#">Incidents <span class="nav-badge">2</span></a>
+                <a href="#">Compliance</a>
+                <a href="#">Reports</a>
+                <a href="#">Administration</a>
+                <a asp-controller="AuditLogs" asp-action="Index">Audit Logs</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="menu-btn">☰</button>
+
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input type="text" placeholder="Search people, tasks, visits, incidents..." />
+                    <kbd>Ctrl + K</kbd>
+                </div>
+
+                <div class="topbar-user">
+                    <span class="notification">🔔</span>
+                    <div class="avatar">JS</div>
+                    <div>
+                        <strong>John Smith</strong>
+                        <small>Tenant Admin</small>
+                    </div>
+                </div>
+            </header>
+
+            <section class="page-content">
+                @RenderBody()
+            </section>
+        </main>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

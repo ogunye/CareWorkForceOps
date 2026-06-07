@@ -1,0 +1,44 @@
+﻿@model CareWorkOps.Web.ViewModels.Tenants.TenantDetailsViewModel
+
+@{
+    ViewData["Title"] = "Tenant Details";
+}
+
+<h1 class="h3 mb-3">Tenant Details</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tenant Name</dt>
+            <dd class="col-sm-9">@Model.TenantName</dd>
+
+            <dt class="col-sm-3">Tenant Slug</dt>
+            <dd class="col-sm-9">@Model.TenantSlug</dd>
+
+            <dt class="col-sm-3">Isolation Mode</dt>
+            <dd class="col-sm-9">@Model.IsolationMode</dd>
+
+            <dt class="col-sm-3">Connection String</dt>
+            <dd class="col-sm-9">
+                @(string.IsNullOrWhiteSpace(Model.ConnectionString) ? "Not provided" : "Configured")
+            </dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Inactive</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">@Model.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")</dd>
+        </dl>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">Back</a>
+    </div>
+</div>

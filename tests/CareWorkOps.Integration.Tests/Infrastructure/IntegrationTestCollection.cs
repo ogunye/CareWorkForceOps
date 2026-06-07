@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Xunit;
 
-namespace CareWorkOps.Integration.Tests.Infrastructure
+namespace CareWorkOps.Api.IntegrationTests.Infrastructure;
+
+[CollectionDefinition(nameof(IntegrationTestCollection))]
+public sealed class IntegrationTestCollection
+    : ICollectionFixture<CareWorkOpsApiTestFactory>
 {
-    [CollectionDefinition(nameof(IntegrationTestCollection))]
-    public sealed class IntegrationTestCollection
-    : ICollectionFixture<CareWorkOpsApiFactory>
-    {
-    }
 }

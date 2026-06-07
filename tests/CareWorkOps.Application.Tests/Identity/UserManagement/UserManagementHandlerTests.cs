@@ -30,7 +30,7 @@ public sealed class UserManagementHandlerTests
             "Password123!",
             ["CareCoordinator"]);
 
-        var user = CreateUserDto(tenantId);
+        var userDto = CreateUserDto(tenantId);
 
         _serviceMock
             .Setup(x => x.CreateUserAsync(
@@ -41,7 +41,7 @@ public sealed class UserManagementHandlerTests
                 command.Password,
                 command.Roles,
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(user);
+            .ReturnsAsync(CareWorkOps.Application.Common.Result<CareWorkOps.Application.Identity.Dtos.UserDto>.Success(userDto));
 
         var handler = new CreateUserCommandHandler(_serviceMock.Object);
 
@@ -71,7 +71,8 @@ public sealed class UserManagementHandlerTests
                 It.IsAny<string>(),
                 It.IsAny<IReadOnlyCollection<string>>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync((UserDto?)null);
+            .ReturnsAsync(CareWorkOps.Application.Common.Result<CareWorkOps.Application.Identity.Dtos.UserDto>.Failure(
+                CareWorkOps.Application.Common.Error.Failure("Unable to create user.")));
 
         var handler = new CreateUserCommandHandler(_serviceMock.Object);
 

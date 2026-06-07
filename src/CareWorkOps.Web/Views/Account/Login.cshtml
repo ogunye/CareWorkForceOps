@@ -1,0 +1,130 @@
+﻿@model CareWorkOps.Web.ViewModels.Auth.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_AuthLayout";
+}
+
+<main class="auth-shell">
+    <section class="auth-brand-panel">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">◆</div>
+            <div>
+                <div class="auth-logo-title">CareWorkOps</div>
+                <div class="auth-logo-subtitle">Care. Work. Operations.</div>
+            </div>
+        </div>
+
+        <div>
+            <h1 class="auth-hero-title">Smarter Care<br />Management</h1>
+            <p class="auth-hero-text">
+                All-in-one platform to manage your care operations, staff,
+                compliance, and service users with confidence.
+            </p>
+
+            <div class="auth-feature">
+                <div class="auth-feature-icon">👥</div>
+                <div>
+                    <h3>People First</h3>
+                    <p>Manage staff, roles and schedules efficiently.</p>
+                </div>
+            </div>
+
+            <div class="auth-feature">
+                <div class="auth-feature-icon">🛡️</div>
+                <div>
+                    <h3>Stay Compliant</h3>
+                    <p>Track compliance, incidents and audits in real time.</p>
+                </div>
+            </div>
+
+            <div class="auth-feature">
+                <div class="auth-feature-icon">📅</div>
+                <div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Optimise rotas and visits with intelligent planning.</p>
+                </div>
+            </div>
+
+            <div class="auth-feature">
+                <div class="auth-feature-icon">📊</div>
+                <div>
+                    <h3>Actionable Insights</h3>
+                    <p>Real-time dashboards to drive better decisions.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-illustration"></div>
+    </section>
+
+    <section class="auth-form-panel">
+        <div class="auth-language">🌐 English⌄</div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo-icon">♥</div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to your CareWorkOps account</p>
+            </div>
+
+            <form asp-controller="Account" asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Email" class="form-label">Email address</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">✉</span>
+                        <input asp-for="Email" class="form-control auth-input" placeholder="Enter your email" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">🔒</span>
+                        <input asp-for="Password" class="form-control auth-input" placeholder="Enter your password" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="auth-options">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" />
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+
+                    <a href="#" class="auth-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-login w-100">
+                    Sign In →
+                </button>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <button type="button" class="btn btn-sso w-100">
+                    🛡️ Sign in with SSO
+                </button>
+
+                <p class="text-center mt-4 mb-0">
+                    Don’t have an account?
+                    <a href="#" class="auth-link">Contact your administrator</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="auth-footer">
+            © 2026 CareWorkOps. All rights reserved. &nbsp; | &nbsp;
+            <a href="#" class="auth-link">Privacy Policy</a> &nbsp; | &nbsp;
+            <a href="#" class="auth-link">Terms of Service</a>
+        </div>
+    </section>
+</main>

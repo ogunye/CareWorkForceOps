@@ -22,6 +22,10 @@ builder.Services.AddHttpClient("CareWorkOpsApi", client =>
     client.BaseAddress = new Uri(baseUrl);
 });
 
+builder.Services.AddScoped<ITenantApiClient, TenantApiClient>();
+builder.Services.AddScoped<IAuthApiClient, AuthApiClient>();
+
+
 builder.Services.AddAuthentication("CareWorkOpsCookie")
     .AddCookie("CareWorkOpsCookie", options =>
     {
@@ -31,7 +35,7 @@ builder.Services.AddAuthentication("CareWorkOpsCookie")
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<ITenantApiClient, TenantApiClient>();
+
 
 var app = builder.Build();
 

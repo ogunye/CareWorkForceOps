@@ -1,0 +1,88 @@
+﻿@model CareWorkOps.Web.Infrastructure.Api.PagedResult<CareWorkOps.Web.ViewModels.Tenants.TenantListItemViewModel>
+
+@{
+    ViewData["Title"] = "Tenants";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3">Tenants</h1>
+        <p class="text-muted">Manage care agency tenants.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        Create Tenant
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] is not null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] is not null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Isolation</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tenant in Model.Items)
+                {
+                    <tr>
+                        <td>@tenant.TenantName</td>
+                        <td>@tenant.TenantSlug</td>
+                        <td>@tenant.IsolationMode</td>
+                        <td>
+                            @if (tenant.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </td>
+                        <td>@tenant.CreatedAtUtc.ToString("dd MMM yyyy")</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@tenant.Id" class="btn btn-sm btn-outline-primary">
+                                View
+                            </a>
+
+                            @if (tenant.IsActive)
+                            {
+                                <form asp-action="Deactivate" asp-route-id="@tenant.Id" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Deactivate
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Activate" asp-route-id="@tenant.Id" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-success">
+                                        Activate
+                                    </button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

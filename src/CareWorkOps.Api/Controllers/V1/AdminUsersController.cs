@@ -258,17 +258,30 @@ public sealed class AdminUsersController : ControllerBase
 
         var response = ApiResponse<T>.Fail(
             result.Error.Message,
-            [result.Error.Message],
+            new[] { result.Error.Message },
             correlationId);
 
-        return result.Error.Code switch
+        // Map known error codes to HTTP responses. Support domain-specific conflict codes
+        // (for example: "User.EmailExists") by treating codes that indicate an "Exists"
+        // condition as Conflict. Keep Validation.Error and Failure.Error handling.
+        if (result.Error.Code == "Validation.Error")
         {
-            "Validation.Error" => BadRequest(response),
-            "Conflict.Error" => Conflict(response),
-            "Failure.Error" when result.Error.Message.Contains("not found", StringComparison.OrdinalIgnoreCase)
-                => NotFound(response),
-            _ => BadRequest(response)
-        };
+            return BadRequest(response);
+        }
+
+        if (result.Error.Code == "Conflict.Error" ||
+            (!string.IsNullOrWhiteSpace(result.Error.Code) && result.Error.Code.EndsWith("Exists", StringComparison.OrdinalIgnoreCase)))
+        {
+            return Conflict(response);
+        }
+
+        if (result.Error.Code == "Failure.Error" &&
+            result.Error.Message.Contains("not found", StringComparison.OrdinalIgnoreCase))
+        {
+            return NotFound(response);
+        }
+
+        return BadRequest(response);
     }
 
     private IActionResult ToActionResult(
@@ -287,16 +300,26 @@ public sealed class AdminUsersController : ControllerBase
 
         var response = ApiResponse<object>.Fail(
             result.Error.Message,
-            [result.Error.Message],
+            new[] { result.Error.Message },
             correlationId);
 
-        return result.Error.Code switch
+        if (result.Error.Code == "Validation.Error")
         {
-            "Validation.Error" => BadRequest(response),
-            "Conflict.Error" => Conflict(response),
-            "Failure.Error" when result.Error.Message.Contains("not found", StringComparison.OrdinalIgnoreCase)
-                => NotFound(response),
-            _ => BadRequest(response)
-        };
+            return BadRequest(response);
+        }
+
+        if (result.Error.Code == "Conflict.Error" ||
+            (!string.IsNullOrWhiteSpace(result.Error.Code) && result.Error.Code.EndsWith("Exists", StringComparison.OrdinalIgnoreCase)))
+        {
+            return Conflict(response);
+        }
+
+        if (result.Error.Code == "Failure.Error" &&
+            result.Error.Message.Contains("not found", StringComparison.OrdinalIgnoreCase))
+        {
+            return NotFound(response);
+        }
+
+        return BadRequest(response);
     }
 }

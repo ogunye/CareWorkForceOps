@@ -19,7 +19,7 @@ public sealed class CreateUserCommandHandler
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
-        var user = await _userManagementService.CreateUserAsync(
+        return await _userManagementService.CreateUserAsync(
             request.TenantId,
             request.FirstName,
             request.LastName,
@@ -27,9 +27,5 @@ public sealed class CreateUserCommandHandler
             request.Password,
             request.Roles,
             cancellationToken);
-
-        return user is null
-            ? Result<UserDto>.Failure(Error.Failure("Unable to create user."))
-            : Result<UserDto>.Success(user);
     }
 }

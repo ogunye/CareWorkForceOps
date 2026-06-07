@@ -1,0 +1,8 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="alert alert-danger mt-4">
+    <h1 class="h4">Access Denied</h1>
+    <p>You do not have permission to access this page.</p>
+</div>

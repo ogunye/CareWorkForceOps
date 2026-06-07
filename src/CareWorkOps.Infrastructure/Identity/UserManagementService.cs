@@ -1,5 +1,6 @@
 ﻿using CareWorkOps.Application.Abstractions.Auditing;
 using CareWorkOps.Application.Abstractions.Identity;
+using CareWorkOps.Application.Common;
 using CareWorkOps.Application.Identity.Dtos;
 using CareWorkOps.Persistence.Context;
 using CareWorkOps.Persistence.Identity;
@@ -27,14 +28,14 @@ public sealed class UserManagementService : IUserManagementService
         _auditService = auditService;
     }
 
-    public async Task<UserDto?> CreateUserAsync(
-        Guid tenantId,
-        string firstName,
-        string lastName,
-        string email,
-        string password,
-        IReadOnlyCollection<string> roles,
-        CancellationToken cancellationToken = default)
+    public async Task<Result<UserDto>> CreateUserAsync(
+     Guid tenantId,
+     string firstName,
+     string lastName,
+     string email,
+     string password,
+     IReadOnlyCollection<string> roles,
+     CancellationToken cancellationToken = default)
     {
         var normalizedEmail = email.Trim().ToUpperInvariant();
 
@@ -45,7 +46,8 @@ public sealed class UserManagementService : IUserManagementService
 
         if (existingUser)
         {
-            return null;
+            return Result<UserDto>.Failure(
+                Error.Conflict($"A user with email '{email}' already exists."));
         }
 
         var user = new ApplicationUser(
@@ -58,7 +60,14 @@ public sealed class UserManagementService : IUserManagementService
 
         if (!createResult.Succeeded)
         {
-            return null;
+            var errors = string.Join(
+                "; ",
+                createResult.Errors.Select(e => e.Description));
+
+            return Result<UserDto>.Failure(
+                Error.Validation(
+                    "User.CreateFailed",
+                    errors));
         }
 
         foreach (var role in roles.Distinct(StringComparer.OrdinalIgnoreCase))
@@ -72,7 +81,14 @@ public sealed class UserManagementService : IUserManagementService
 
                 if (!roleResult.Succeeded)
                 {
-                    return null;
+                    var errors = string.Join(
+                        "; ",
+                        roleResult.Errors.Select(e => e.Description));
+
+                    return Result<UserDto>.Failure(
+                        Error.Validation(
+                            "User.RoleCreateFailed",
+                            errors));
                 }
             }
 
@@ -80,7 +96,14 @@ public sealed class UserManagementService : IUserManagementService
 
             if (!addRoleResult.Succeeded)
             {
-                return null;
+                var errors = string.Join(
+                    "; ",
+                    addRoleResult.Errors.Select(e => e.Description));
+
+                return Result<UserDto>.Failure(
+                    Error.Validation(
+                        "User.RoleAssignFailed",
+                        errors));
             }
         }
 
@@ -90,7 +113,14 @@ public sealed class UserManagementService : IUserManagementService
 
         if (!claimResult.Succeeded)
         {
-            return null;
+            var errors = string.Join(
+                "; ",
+                claimResult.Errors.Select(e => e.Description));
+
+            return Result<UserDto>.Failure(
+                Error.Validation(
+                    "User.ClaimCreateFailed",
+                    errors));
         }
 
         await _auditService.RecordAsync(
@@ -102,8 +132,12 @@ public sealed class UserManagementService : IUserManagementService
             $"User '{user.Email}' was created.",
             cancellationToken);
 
-        return await MapToDtoAsync(user);
+        var dto = await MapToDtoAsync(user);
+
+        return Result<UserDto>.Success(dto);
     }
+
+
 
     public async Task<UserDto?> UpdateUserAsync(
         Guid tenantId,
